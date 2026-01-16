@@ -21,13 +21,6 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
-@app.get("/", status_code=status.HTTP_200_OK)
-async def user(
-    user: user_dependency, 
-    db: db_dependency
-    ):
-    return {"User": user}
-
 
 @app.post("/encyclopedias", response_model=schemas.EncyclopediaResponse)
 def create_encyclopedia(

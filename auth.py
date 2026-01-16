@@ -9,12 +9,17 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
 from models import User
+import os
+from dotenv import load_dotenv
+
 
 router = APIRouter(
     prefix="/auth",
     tags=['auth']
 )
+load_dotenv()
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
 ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['argon2'],deprecated='auto')
@@ -61,7 +66,6 @@ async def login_for_access_token(
     if not user:
         raise HTTPException (status_code=status.HTTP_401_UNAUTHORIZED, detail="No se ha podido verificar el usuario")
     token = create_access_token(user.username, user.id, timedelta(minutes=20))
-
     return {'access_token': token, 'token_type':'bearer'}
 
 

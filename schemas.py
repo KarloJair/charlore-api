@@ -4,18 +4,6 @@ from datetime import datetime
 
 
 
-class UserCreate(BaseModel):
-    username: str = Field(min_length=3, max_length=50)
-    password: str = Field(min_length=8)
-
-class UserResponse(BaseModel):
-    id: int
-    username: str
-    created_at: datetime
-
-    class Config:
-        orm_mode = True
-
 class EncyclopediaCreate(BaseModel):
     name: str
     created_by: int
